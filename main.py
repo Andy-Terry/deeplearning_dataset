@@ -14,6 +14,9 @@ settings = {
     "set_name":"XXX"   #集合名字
 }
 
+MGdb_dic = {}
+Remote_dit = {}
+
 if __name__ == "__main__":
     cfg_name = "darkent_yolov4_vis2020.cfg"
     cfg_folder_path = "./cfg"
