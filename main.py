@@ -7,13 +7,6 @@ from src.Mdb_process_class import MyMongoDB
 from src.Mdb_process_tool import tool_TXT2Mdb
 from src.data_process_class import DataProcess
 
-settings = {
-    "ip":'000.000.000.000',   #ip
-    "port":00000,           #端口
-    "db_name":"YYY",    #数据库名字
-    "set_name":"XXX"   #集合名字
-}
-
 MGdb_dic = {}
 Remote_dit = {}
 
@@ -23,15 +16,13 @@ if __name__ == "__main__":
 
     cfg_path = os.path.join(cfg_folder_path, cfg_name)
     cfg_instance = CFGList(cfg_path)
-    section_list, cfg_section, cfg_data= cfg_instance.section_list_function()
+    section_list, cfg_section, cfg_data= cfg_instance.get_section_list()
 
     for line_loop in range(len(section_list)):
         if section_list[line_loop] == "MGdb_config":
-            settings["ip"] = (cfg_data.get(cfg_section[line_loop], "ip")).split(" ")[0]
-            settings["port"] = int((cfg_data.get(cfg_section[line_loop], "port")).split(" ")[0])
-            settings["db_name"] = (cfg_data.get(cfg_section[line_loop], "db_name")).split(" ")[0]
-            settings["set_name"] = (cfg_data.get(cfg_section[line_loop], "set_name")).split(" ")[0]
-            mongo = MyMongoDB(settings)
+            MGdb_dic = cfg_instance.get_cfg_dit(line_loop)
+            mongo = MyMongoDB(MGdb_dic)
+            # MGdb_dic = {}
 
         elif section_list[line_loop] == "MGdb_create":
             foldel_path = cfg_data.get(cfg_section[line_loop], "data_folder_patch")
