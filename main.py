@@ -12,56 +12,36 @@ Remote_dit = {}
 
 if __name__ == "__main__":
     cfg_name = "darkent_yolov4_vis2020.cfg"
-    cfg_folder_path = "./cfg"
-
-    cfg_path = os.path.join(cfg_folder_path, cfg_name)
+    cfg_path = os.path.join("./cfg", cfg_name)
     cfg_instance = CFGList(cfg_path)
-    section_list, cfg_section, cfg_data= cfg_instance.get_section_list()
+    section_list= cfg_instance.get_section_list()
 
     for line_loop in range(len(section_list)):
         if section_list[line_loop] == "MGdb_config":
             MGdb_dic = cfg_instance.get_cfg_dit(line_loop)
             mongo = MyMongoDB(MGdb_dic)
-            # MGdb_dic = {}
 
         elif section_list[line_loop] == "MGdb_create":
-            foldel_path = cfg_data.get(cfg_section[line_loop], "data_folder_patch")
-            open_suffix = (cfg_data.get(cfg_section[line_loop], "suffix")).split(" ")[0]
-            if open_suffix == ".txt":
-                tool_TXT2Mdb(foldel_path, mongo)
-            elif open_suffix == ".xml":
+            MGdb_dic = cfg_instance.get_cfg_dit(line_loop)
+            if MGdb_dic["suffix"] == ".txt":
+                # mongo.delete_coll(MGdb_dic["set_name"])
+                tool_TXT2Mdb(MGdb_dic["data_folder_patch"], mongo)
+            elif MGdb_dic["suffix"] == ".xml":
                 pass
             else:
                 print("error : cann't open suffix file, see cfg file config")
             
-
-        elif section_list[line_loop] == "data_process":
-            foldel_path = cfg_data.get(cfg_section[line_loop], "data_folder_patch")
-            open_suffix = (cfg_data.get(cfg_section[line_loop], "suffix")).split(" ")[0]
-            if open_suffix == ".jpg":
-                DataProcess_SD = DataProcess(foldel_path, open_suffix, line_loop)
-                SD_matrix = DataProcess_SD.SizeDistribution_jpg()
-            elif open_suffix == ".xml":
-                pass
-            else:
-                print("error : cann't open suffix file, see cfg file config")
-
-        # elif section_list[line_loop] == "MGdb_process":
-        #     print("welcome MGdb")
+        # elif section_list[line_loop] == "data_process":
+        #     MGdb_dic = cfg_instance.get_cfg_dit(line_loop)
+        #     if MGdb_dic["suffix"]  == ".jpg":
+        #         DataProcess_SD = DataProcess(MGdb_dic["data_folder_patch"], MGdb_dic["suffix"], line_loop)
+        #         SD_matrix = DataProcess_SD.SizeDistribution_jpg()
+        #     elif MGdb_dic["suffix"]  == ".xml":
+        #         pass
+        #     else:
+        #         print("error : cann't open suffix file, see cfg file config")
 
         else:
             print("cfg config is error:", line_loop, "line", section_list[line_loop], "Undefined")
 
-
-
     print(section_list)
-    print(cfg_data)
-
-    # print(section_list)  
-    # option_list = cfg.options(section_list[3])
-    # print(option_list) 
-    # key_value = cfg.get(section_list[3], option_list[0])
-    # print(len(key_value)) 
-    # key_value = key_value.split("#")
-    # print(len(key_value)) 
-    # print("ok")

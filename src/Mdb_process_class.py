@@ -8,8 +8,7 @@ from pymongo import MongoClient
 #     "set_name" : "train_dataset"
 # }
 
-class MyMongoDB(object):
-# class MyMongoDB:
+class MyMongoDB:
     def __init__(self, settings):
         try:
             self.conn = MongoClient(settings["ip"],settings["port"])
