@@ -11,6 +11,7 @@ PN=27017
 #fork=true #以守护程序的方式启用，即在后台运行
 
 ./mongod --dbpath=$db_path --logpath=$log_path --bind_ip=$IP --port=$PN --fork
+# ./mongod --dbpath=$db_path --logpath=$log_path --bind_ip=$IP --port=$PN
 
 # close mongodb 
 # ps -ef | grep mongo   # find mongo

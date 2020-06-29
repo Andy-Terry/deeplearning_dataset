@@ -4,7 +4,7 @@ import configparser
 
 from src.cfg_process_class import CFGList
 from src.Mdb_process_class import MyMongoDB
-from src.Mdb_process_tool import tool_TXT2Mdb
+from src.Mdb_process_tool import tool_TXT2Mdb_Vis, tool_TXT2Mdb_OSU
 from src.data_process_class import DataProcess
 
 MGdb_dic = {}
@@ -25,7 +25,17 @@ if __name__ == "__main__":
             MGdb_dic = cfg_instance.get_cfg_dit(line_loop)
             if MGdb_dic["suffix"] == ".txt":
                 # mongo.delete_coll(MGdb_dic["set_name"])
-                tool_TXT2Mdb(MGdb_dic["data_folder_patch"], mongo)
+                tool_TXT2Mdb_Vis(MGdb_dic["data_folder_patch"], mongo)
+            elif MGdb_dic["suffix"] == ".xml":
+                pass
+            else:
+                print("error : cann't open suffix file, see cfg file config")
+
+        elif section_list[line_loop] == "MGdb_createOSU":
+            MGdb_dic = cfg_instance.get_cfg_dit(line_loop)
+            if MGdb_dic["suffix"] == ".txt":
+                # mongo.delete_coll(MGdb_dic["set_name"])
+                tool_TXT2Mdb_OSU(MGdb_dic["data_folder_patch"], mongo)
             elif MGdb_dic["suffix"] == ".xml":
                 pass
             else:

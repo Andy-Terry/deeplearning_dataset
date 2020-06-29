@@ -2,7 +2,7 @@ import os
 import configparser
 import numpy as np
 
-process_flag = ["MGdb_create", "data_process"]
+process_flag = ["MGdb_create", "data_process", "MGdb_createOSU"]
 
 CFG_Dit = {"data_folder_patch":"XXX", "suffix":"XXX", "Remote_flag":0,
     "ip":"000.000.000.000", "port":00000, "db_name":"XXX", "set_name":"XXX",
